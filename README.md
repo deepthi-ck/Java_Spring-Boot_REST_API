@@ -1,49 +1,63 @@
-# Java Spring Boot REST API — Java 17
+# Java Spring Boot REST API
 
-Single-module Spring Boot REST API (`java.version=17`, Spring Boot 3.2).
-Tools are wired into this project (Maven + `config/` + `scripts/`) — **not** separate tool folders.
+Spring Boot REST API application for **Java 17 only**.
 
-Tool versions follow [Golden_Repo_Lite Java-17](https://github.com/testable-platform/Golden_Repo_Lite/tree/java/Java-17).
+Inspired by the layout conventions of [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
+(`.sdkmanrc`, `.editorconfig`, `config/`, `documentation/`, wrapper, CI) and the official
+[Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/) application shape —
+while remaining a single product REST API (not the Spring Boot framework monorepo).
 
-## Structure
+## Requirements
+
+- JDK **17** (see `.sdkmanrc`)
+- Maven Wrapper (`./mvnw` / `mvnw.cmd`) — no global Maven required
+
+## Project structure
 
 ```
-pom.xml
-config/checkstyle|pmd|spotbugs/
-scripts/git_churn.py, run_ck.sh, run_tools.sh
-src/main/java/com/example/restapi/
-  controller|service|repository|model|dto|mapper|exception|config|util
-src/test/java/...
+.
+├── .github/workflows/          CI (JDK 17)
+├── .mvn/wrapper/               Maven Wrapper
+├── .sdkmanrc                   Java 17 pin
+├── .editorconfig
+├── config/                     Checkstyle / PMD / SpotBugs (like Spring Boot config/)
+├── documentation/              Architecture, API, tools
+├── scripts/
+│   ├── ck/                     CK runner
+│   ├── git/                    Git churn metrics
+│   └── tools/                  Aggregate quality pipeline
+├── src/main/java/.../restapi/  Spring Boot application + REST layers
+├── src/main/resources/         application.yaml (+ profiles)
+├── src/test/java/              Tests
+├── mvnw / mvnw.cmd
+└── pom.xml                     Spring Boot 3.2 + quality plugins
 ```
 
-## APIs
-
-- `/api/items` CRUD + stock adjust
-- `/api/products` CRUD
-- `/api/categories` CRUD
-- `/api/customers` CRUD
-- `/api/orders` create/list/status
-- `/api/shipments` create/list
-- `/api/stats/summary`
-- `/api/health`
-
-## Tools (Java 17)
-
-| Tool | Integration | Command |
-|------|-------------|---------|
-| CK | `scripts/run_ck.sh` + profile `ck` | `bash scripts/run_ck.sh` |
-| Checkstyle | plugin + `config/checkstyle/` | `mvn checkstyle:check` |
-| PMD | plugin + `config/pmd/ruleset.xml` | `mvn pmd:check` |
-| CPD | PMD plugin | `mvn pmd:cpd-check` |
-| SpotBugs | plugin + `config/spotbugs/` | `mvn spotbugs:check` |
-| JaCoCo | plugin 0.8.12 | `mvn test jacoco:report` |
-| PIT | pitest-maven 1.17.0 | `mvn org.pitest:pitest-maven:mutationCoverage` |
-| OWASP-Dependency-Check | 10.0.4 | `mvn org.owasp:dependency-check-maven:check` |
-| diff-cover | diff-coverage plugin | `mvn diff-coverage:report` |
-| Git | `scripts/git_churn.py` | `python scripts/git_churn.py` |
-| Static-DU-JaCoCo-composite | profile | `mvn verify -Pstatic-du-jacoco-composite` |
+## Building from source
 
 ```bash
-mvn clean verify
-mvn spring-boot:run
+./mvnw clean test
+./mvnw spring-boot:run
 ```
+
+Windows:
+
+```bat
+mvnw.cmd clean test
+mvnw.cmd spring-boot:run
+```
+
+Health: `http://localhost:8080/api/health`
+
+## Quality tools (integrated)
+
+See `documentation/TOOLS.md`. All of: CK, CPD, Checkstyle, Git, JaCoCo,
+OWASP-Dependency-Check, PIT, PMD, SpotBugs, Static-DU-JaCoCo-composite, diff-cover.
+
+```bash
+bash scripts/tools/run_tools.sh
+```
+
+## License
+
+Apache License 2.0 — see `LICENSE.txt`.
