@@ -1,4 +1,4 @@
-﻿package com.example.restapi.model;
+package com.example.restapi.model;
 
 import java.time.Instant;
 

@@ -17,7 +17,7 @@
   <properties>
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jacoco.version>0.8.12</jacoco.version>
+    <jacoco.version>0.8.14</jacoco.version>
     <pitest.version>1.17.0</pitest.version>
     <pitest.junit5.version>1.2.1</pitest.junit5.version>
     <dependency-check.version>10.0.4</dependency-check.version>
@@ -58,6 +58,34 @@
         <configuration>
           <release>11</release>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <net.bytebuddy.experimental>true</net.bytebuddy.experimental>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>enforce-java-11-bytecode</id>
+            <goals><goal>enforce</goal></goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[11,)</version>
+                  <message>JDK 11+ is required to build. This project targets Java 11 only (release=11).</message>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -185,7 +213,7 @@
           <executable>bash</executable>
           <workingDirectory>${project.basedir}</workingDirectory>
           <arguments>
-            <argument>scripts/run_ck.sh</argument>
+            <argument>scripts/ck/run_ck.sh</argument>
           </arguments>
         </configuration>
       </plugin>

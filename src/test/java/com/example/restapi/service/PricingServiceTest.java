@@ -1,4 +1,4 @@
-﻿package com.example.restapi.service;
+package com.example.restapi.service;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

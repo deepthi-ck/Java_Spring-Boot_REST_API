@@ -1,4 +1,4 @@
-﻿package com.example.restapi.model;
+package com.example.restapi.model;
 
 public class Address {
     private String line1;

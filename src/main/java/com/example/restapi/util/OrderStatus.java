@@ -1,4 +1,4 @@
-﻿package com.example.restapi.util;
+package com.example.restapi.util;
 
 public enum OrderStatus {
     NEW,

@@ -1,4 +1,4 @@
-﻿package com.example.restapi.util;
+package com.example.restapi.util;
 
 public final class SkuUtils {
     private SkuUtils() {}

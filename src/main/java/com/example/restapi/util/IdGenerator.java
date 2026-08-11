@@ -1,4 +1,4 @@
-﻿package com.example.restapi.util;
+package com.example.restapi.util;
 
 import java.util.concurrent.atomic.AtomicLong;
 

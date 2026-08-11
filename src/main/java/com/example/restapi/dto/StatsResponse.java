@@ -1,4 +1,4 @@
-﻿package com.example.restapi.dto;
+package com.example.restapi.dto;
 
 public class StatsResponse {
     private long itemCount;

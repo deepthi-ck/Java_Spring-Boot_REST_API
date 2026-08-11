@@ -1,4 +1,4 @@
-﻿package com.example.restapi.exception;
+package com.example.restapi.exception;
 
 import com.example.restapi.dto.ApiError;
 import org.springframework.http.HttpStatus;

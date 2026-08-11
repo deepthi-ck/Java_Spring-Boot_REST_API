@@ -1,4 +1,4 @@
-﻿package com.example.restapi.controller;
+package com.example.restapi.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

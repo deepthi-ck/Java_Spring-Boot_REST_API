@@ -1,10 +1,10 @@
-﻿"""Git churn analysis via PyDriller (Git tool for Java 11 project)."""
+"""Git churn analysis via PyDriller (Git tool for Java 11 project)."""
 import json
 from collections import defaultdict
 from pathlib import Path
 from pydriller import Repository
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 def main(max_commits=200):
     churn = defaultdict(lambda: {"commits": 0, "added": 0, "removed": 0})

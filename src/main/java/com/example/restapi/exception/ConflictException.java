@@ -1,4 +1,4 @@
-﻿package com.example.restapi.exception;
+package com.example.restapi.exception;
 
 public class ConflictException extends RuntimeException {
     public ConflictException(String message) {

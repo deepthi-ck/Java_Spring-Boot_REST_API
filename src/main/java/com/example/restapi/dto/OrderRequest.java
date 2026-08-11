@@ -1,4 +1,4 @@
-﻿package com.example.restapi.dto;
+package com.example.restapi.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

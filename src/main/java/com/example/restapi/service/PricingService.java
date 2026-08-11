@@ -1,4 +1,4 @@
-﻿package com.example.restapi.service;
+package com.example.restapi.service;
 
 import com.example.restapi.util.MoneyUtils;
 import org.springframework.beans.factory.annotation.Value;

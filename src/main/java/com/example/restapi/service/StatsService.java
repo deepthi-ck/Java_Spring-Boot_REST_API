@@ -1,4 +1,4 @@
-﻿package com.example.restapi.service;
+package com.example.restapi.service;
 
 import com.example.restapi.dto.StatsResponse;
 import com.example.restapi.repository.ItemRepository;
