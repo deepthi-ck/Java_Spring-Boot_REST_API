@@ -1,0 +1,8 @@
+tool: PMD
+language: java
+jdk_version: "8"
+technique: "Static Code Analysis"
+classification: "Lint / Rule Violations"
+target_files: [PmdViolations.java, ruleset.xml]
+run: {command: "bash run_pmd.sh"}
+expects: {violations_detected: true}

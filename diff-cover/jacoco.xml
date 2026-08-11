@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report name="fixture">
+  <package name="fixture">
+    <class name="fixture/Calculator">
+      <method name="add" line="4">
+        <counter type="LINE" missed="0" covered="1"/>
+      </method>
+      <method name="subtract" line="8">
+        <counter type="LINE" missed="1" covered="0"/>
+      </method>
+    </class>
+  </package>
+</report>

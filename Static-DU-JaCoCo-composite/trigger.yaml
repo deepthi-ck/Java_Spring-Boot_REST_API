@@ -1,0 +1,8 @@
+tool: "Static DU + JaCoCo (composite)"
+language: java
+jdk_version: "8"
+technique: "Data Flow Testing + Control Flow Testing"
+classification: "Dead Definition Detection + Branch Coverage"
+target_files: [DataFlowSample.java, DataFlowSampleTest.java]
+run: {command: "bash run_composite.sh"}
+expects: {dead_def_detected: true, branch_coverage_report_generated: true}

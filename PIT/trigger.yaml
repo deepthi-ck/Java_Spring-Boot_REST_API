@@ -1,0 +1,9 @@
+tool: PIT
+version: "pitest-maven 1.17.0"
+language: java
+jdk_version: "8"
+technique: "Mutation Testing"
+classification: "Mutation Score"
+target_files: [Calculator.java, CalculatorTest.java]
+run: {command: "bash run_pit.sh"}
+expects: {mutants_generated_and_tested: true}

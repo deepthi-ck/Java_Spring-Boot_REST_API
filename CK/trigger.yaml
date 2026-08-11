@@ -1,0 +1,8 @@
+tool: CK
+language: java
+jdk_version: "8"
+technique: "Object-Oriented Metrics"
+classification: "Chidamber-Kemerer Suite (WMC, CBO, RFC, LCOM)"
+target_files: [OrderService.java]
+run: {command: "bash run_ck.sh"}
+expects: {oop_metrics_report_generated: true}

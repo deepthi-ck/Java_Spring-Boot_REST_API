@@ -1,0 +1,9 @@
+tool: JaCoCo
+version: "0.8.12"
+language: java
+jdk_version: "8"
+technique: "Control Flow Testing"
+classification: "Statement / Branch Coverage"
+target_files: [Calculator.java, CalculatorTest.java]
+run: {command: "bash run_jacoco.sh"}
+expects: {coverage_report_generated: true}
