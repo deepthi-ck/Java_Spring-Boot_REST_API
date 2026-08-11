@@ -1,8 +1,0 @@
-tool: Checkstyle
-language: java
-jdk_version: "8"
-technique: "Static Code Analysis"
-classification: "Lint / Rule Violations"
-target_files: [LintViolations.java, checkstyle.xml]
-run: {command: "bash run_checkstyle.sh"}
-expects: {violations_detected: true}

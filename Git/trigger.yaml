@@ -1,9 +1,0 @@
-tool: Git
-language: java
-jdk_version: "8"
-technique: "Development Process Analysis"
-classification: "Code Churn"
-target_files: []
-run: {command: "python run_pydriller.py"}
-notes: "Reads git commit history directly; no source fixture needed."
-expects: {churn_report_generated: true}

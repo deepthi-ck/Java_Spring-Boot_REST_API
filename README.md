@@ -1,22 +1,54 @@
-# Spring Boot REST API — Java 8
+# Java Spring Boot REST API — Java 8
 
-Scenario 1 (Monolithic) · flat (single module) · Customer Version **8**
+Single-module Spring Boot REST API (`java.version=1.8`).  
+Tools are wired into this project (Maven plugins + `config/` + `scripts/`) — **not** separate tool folders.
 
-Tool fixtures mirror [Golden_Repo_Lite / Java-8](https://github.com/testable-platform/Golden_Repo_Lite/tree/java/Java-8),
-plus **Git** and **Static-DU-JaCoCo-composite** adapted for JDK 8.
+## Project structure
 
-| Tool | Folder | Run |
-|------|--------|-----|
-| CK | `CK/` | `bash run_ck.sh` |
-| CPD | `CPD/` | `bash run_cpd.sh` |
-| Checkstyle | `Checkstyle/` | `bash run_checkstyle.sh` |
-| Git | `Git/` | `python run_pydriller.py` |
-| JaCoCo | `JaCoCo/` | `bash run_jacoco.sh` |
-| OWASP-Dependency-Check | `OWASP-Dependency-Check/` | `bash run_owasp_dc.sh` |
-| PIT | `PIT/` | `bash run_pit.sh` |
-| PMD | `PMD/` | `bash run_pmd.sh` |
-| SpotBugs | `SpotBugs/` | `bash run_spotbugs.sh` |
-| Static-DU-JaCoCo-composite | `Static-DU-JaCoCo-composite/` | `bash run_composite.sh` |
-| diff-cover | `diff-cover/` | `bash run_diff_cover.sh` |
+```
+pom.xml
+config/
+  checkstyle/checkstyle.xml
+  pmd/ruleset.xml
+  pmd/static-du-ruleset.xml
+scripts/
+  git_churn.py
+src/main/java/...
+src/test/java/...
+```
 
-Each folder has `trigger.yaml` for Testable execution.
+## REST API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/items` | List items |
+| GET | `/api/items/{id}` | Get item |
+| POST | `/api/items` | Create item |
+| PUT | `/api/items/{id}` | Update item |
+| DELETE | `/api/items/{id}` | Delete item |
+| GET | `/api/items/stats/total` | Total price |
+
+```bash
+mvn spring-boot:run
+```
+
+## Tools (Java 8)
+
+| Tool | How it is included | Command |
+|------|--------------------|---------|
+| **Checkstyle** | `maven-checkstyle-plugin` + `config/checkstyle/` | `mvn checkstyle:check` |
+| **PMD** | `maven-pmd-plugin` + `config/pmd/ruleset.xml` | `mvn pmd:check` |
+| **CPD** | same PMD plugin (`cpd-check`) | `mvn pmd:cpd-check` |
+| **SpotBugs** | `spotbugs-maven-plugin` | `mvn spotbugs:check` |
+| **JaCoCo** | `jacoco-maven-plugin` | `mvn test jacoco:report` |
+| **PIT** | `pitest-maven` | `mvn org.pitest:pitest-maven:mutationCoverage` |
+| **OWASP-Dependency-Check** | `dependency-check-maven` | `mvn org.owasp:dependency-check-maven:check` |
+| **diff-cover** | `diff-coverage-maven-plugin` | `mvn diff-coverage:report` |
+| **Git** | `scripts/git_churn.py` (PyDriller) | `python scripts/git_churn.py` |
+| **Static-DU-JaCoCo-composite** | profile `static-du-jacoco-composite` | `mvn verify -Pstatic-du-jacoco-composite` |
+
+Full verify (Checkstyle, PMD/CPD, SpotBugs, JaCoCo):
+
+```bash
+mvn clean verify
+```

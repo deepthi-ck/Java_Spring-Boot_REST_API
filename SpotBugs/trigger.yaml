@@ -1,8 +1,0 @@
-tool: SpotBugs
-language: java
-jdk_version: "8"
-technique: "Static Code Analysis"
-classification: "Bug Pattern Detection"
-target_files: [BugPattern.java]
-run: {command: "bash run_spotbugs.sh"}
-expects: {findings_detected: true}

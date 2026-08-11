@@ -1,8 +1,0 @@
-tool: CPD
-language: java
-jdk_version: "8"
-technique: "Code Quality Auditing"
-classification: "Code Duplication Detection"
-target_files: [RetailOrderProcessor.java, WholesaleOrderProcessor.java]
-run: {command: "bash run_cpd.sh"}
-expects: {duplicate_clone_detected: true}

@@ -1,8 +1,0 @@
-tool: diff-cover
-language: java
-jdk_version: "8"
-technique: "Regression / Coverage Delta"
-classification: "Coverage Delta %"
-target_files: [Calculator.java, jacoco.xml]
-run: {command: "bash run_diff_cover.sh"}
-expects: {diff_coverage_report_generated: true}
