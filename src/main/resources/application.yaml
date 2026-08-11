@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: java-spring-boot-rest-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  pricing:
+    tax-rate-percent: 8.0
+    default-discount-percent: 0.0
+  security:
+    api-key: demo-key-java21
+  events:
+    max-queue-size: 1000
+  runtime:
+    java-version: 21

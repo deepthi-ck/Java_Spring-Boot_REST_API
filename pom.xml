@@ -13,11 +13,19 @@
   <artifactId>java-spring-boot-rest-api</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>Java Spring Boot REST API</name>
-  <description>Spring Boot REST API - Java 21 (Scenario 1 Monolithic)</description>
+  <description>Spring Boot REST API - Java 21 only (Scenario 1 Monolithic)</description>
+  <url>https://github.com/deepthi-ck/Java_Spring-Boot_REST_API</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
   <properties>
     <java.version>21</java.version>
+    <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jacoco.version>0.8.12</jacoco.version>
+    <jacoco.version>0.8.14</jacoco.version>
     <pitest.version>1.17.0</pitest.version>
     <pitest.junit5.version>1.2.1</pitest.junit5.version>
     <dependency-check.version>10.0.4</dependency-check.version>
@@ -40,6 +48,34 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration><release>21</release></configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <net.bytebuddy.experimental>true</net.bytebuddy.experimental>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>enforce-java-21-bytecode</id>
+            <goals><goal>enforce</goal></goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[21,)</version>
+                  <message>JDK 21+ is required to build. This project targets Java 21 only (release=21).</message>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -146,7 +182,7 @@
         <configuration>
           <executable>bash</executable>
           <workingDirectory>${project.basedir}</workingDirectory>
-          <arguments><argument>scripts/run_ck.sh</argument></arguments>
+          <arguments><argument>scripts/ck/run_ck.sh</argument></arguments>
         </configuration>
       </plugin>
     </plugins>

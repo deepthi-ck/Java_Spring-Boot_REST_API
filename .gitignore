@@ -9,3 +9,14 @@ target/
 dependency-check-report.*
 .DS_Store
 ck-reports/
+ck.jar
+.factorypath
+bin/
+out/
+build/
+.gradle/
+*.class
+hs_err_pid*
+replay_pid*
+.springBeans
+.springBootStarters

@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: java-spring-boot-rest-api-prod
+
+app:
+  security:
+    api-key: ${APP_API_KEY:prod-key-java21}
+  pricing:
+    tax-rate-percent: 8.0
