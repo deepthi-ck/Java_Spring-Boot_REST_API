@@ -1,54 +1,63 @@
-# Java Spring Boot REST API — Java 8
+# Java Spring Boot REST API
 
-Single-module Spring Boot REST API (`java.version=1.8`).  
-Tools are wired into this project (Maven plugins + `config/` + `scripts/`) — **not** separate tool folders.
+Spring Boot REST API application for **Java 8 only**.
+
+Inspired by the layout conventions of [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
+(`.sdkmanrc`, `.editorconfig`, `config/`, `documentation/`, wrapper, CI) and the official
+[Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/) application shape —
+while remaining a single product REST API (not the Spring Boot framework monorepo).
+
+## Requirements
+
+- JDK **8** (see `.sdkmanrc`)
+- Maven Wrapper (`./mvnw` / `mvnw.cmd`) — no global Maven required
 
 ## Project structure
 
 ```
-pom.xml
-config/
-  checkstyle/checkstyle.xml
-  pmd/ruleset.xml
-  pmd/static-du-ruleset.xml
-scripts/
-  git_churn.py
-src/main/java/...
-src/test/java/...
+.
+├── .github/workflows/          CI (JDK 8)
+├── .mvn/wrapper/               Maven Wrapper
+├── .sdkmanrc                   Java 8 pin
+├── .editorconfig
+├── config/                     Checkstyle / PMD / SpotBugs (like Spring Boot config/)
+├── documentation/              Architecture, API, tools
+├── scripts/
+│   ├── ck/                     CK runner
+│   ├── git/                    Git churn metrics
+│   └── tools/                  Aggregate quality pipeline
+├── src/main/java/.../restapi/  Spring Boot application + REST layers
+├── src/main/resources/         application.yaml (+ profiles)
+├── src/test/java/              Tests
+├── mvnw / mvnw.cmd
+└── pom.xml                     Spring Boot 2.7 + quality plugins
 ```
 
-## REST API
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/items` | List items |
-| GET | `/api/items/{id}` | Get item |
-| POST | `/api/items` | Create item |
-| PUT | `/api/items/{id}` | Update item |
-| DELETE | `/api/items/{id}` | Delete item |
-| GET | `/api/items/stats/total` | Total price |
+## Building from source
 
 ```bash
-mvn spring-boot:run
+./mvnw clean test
+./mvnw spring-boot:run
 ```
 
-## Tools (Java 8)
+Windows:
 
-| Tool | How it is included | Command |
-|------|--------------------|---------|
-| **Checkstyle** | `maven-checkstyle-plugin` + `config/checkstyle/` | `mvn checkstyle:check` |
-| **PMD** | `maven-pmd-plugin` + `config/pmd/ruleset.xml` | `mvn pmd:check` |
-| **CPD** | same PMD plugin (`cpd-check`) | `mvn pmd:cpd-check` |
-| **SpotBugs** | `spotbugs-maven-plugin` | `mvn spotbugs:check` |
-| **JaCoCo** | `jacoco-maven-plugin` | `mvn test jacoco:report` |
-| **PIT** | `pitest-maven` | `mvn org.pitest:pitest-maven:mutationCoverage` |
-| **OWASP-Dependency-Check** | `dependency-check-maven` | `mvn org.owasp:dependency-check-maven:check` |
-| **diff-cover** | `diff-coverage-maven-plugin` | `mvn diff-coverage:report` |
-| **Git** | `scripts/git_churn.py` (PyDriller) | `python scripts/git_churn.py` |
-| **Static-DU-JaCoCo-composite** | profile `static-du-jacoco-composite` | `mvn verify -Pstatic-du-jacoco-composite` |
+```bat
+mvnw.cmd clean test
+mvnw.cmd spring-boot:run
+```
 
-Full verify (Checkstyle, PMD/CPD, SpotBugs, JaCoCo):
+Health: `http://localhost:8080/api/health`
+
+## Quality tools (integrated)
+
+See `documentation/TOOLS.md`. All of: CK, CPD, Checkstyle, Git, JaCoCo,
+OWASP-Dependency-Check, PIT, PMD, SpotBugs, Static-DU-JaCoCo-composite, diff-cover.
 
 ```bash
-mvn clean verify
+bash scripts/tools/run_tools.sh
 ```
+
+## License
+
+Apache License 2.0 — see `LICENSE.txt`.

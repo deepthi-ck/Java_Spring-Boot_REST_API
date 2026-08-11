@@ -8,3 +8,5 @@ target/
 *.log
 dependency-check-report.*
 .DS_Store
+
+ck-reports/

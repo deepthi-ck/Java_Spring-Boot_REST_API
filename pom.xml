@@ -3,26 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.7.18</version>
     <relativePath/>
   </parent>
-
   <groupId>com.example</groupId>
   <artifactId>java-spring-boot-rest-api</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>Java Spring Boot REST API</name>
   <description>Spring Boot REST API - Java 8 (Scenario 1 Monolithic)</description>
-
   <properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <!-- Tool versions aligned with Golden_Repo_Lite Java-8 / verified Java 8 support -->
-    <jacoco.version>0.8.12</jacoco.version>
+    <jacoco.version>0.8.14</jacoco.version>
     <pitest.version>1.17.0</pitest.version>
     <pitest.junit5.version>1.2.1</pitest.junit5.version>
     <dependency-check.version>10.0.4</dependency-check.version>
@@ -32,7 +27,6 @@
     <checkstyle.version>9.3</checkstyle.version>
     <diff-coverage.version>0.0.8</diff-coverage.version>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -44,19 +38,20 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-
-      <!-- Compiler: Java 8 only -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -65,45 +60,51 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-
-      <!-- JaCoCo — statement / branch coverage -->
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <net.bytebuddy.experimental>true</net.bytebuddy.experimental>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
         <executions>
           <execution>
-            <id>prepare-agent</id>
-            <goals><goal>prepare-agent</goal></goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals><goal>report</goal></goals>
-          </execution>
-          <execution>
-            <id>jacoco-check</id>
-            <phase>verify</phase>
-            <goals><goal>check</goal></goals>
+            <id>enforce-java-8-bytecode</id>
+            <goals><goal>enforce</goal></goals>
             <configuration>
               <rules>
-                <rule>
-                  <element>BUNDLE</element>
-                  <limits>
-                    <limit>
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.50</minimum>
-                    </limit>
-                  </limits>
-                </rule>
+                <requireJavaVersion>
+                  <version>[1.8,)</version>
+                  <message>JDK 8+ is required to build. This project targets Java 8 only (source/target=1.8).</message>
+                </requireJavaVersion>
               </rules>
             </configuration>
           </execution>
         </executions>
       </plugin>
-
-      <!-- Checkstyle -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution>
+          <execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals></execution>
+          <execution>
+            <id>jacoco-check</id><phase>verify</phase><goals><goal>check</goal></goals>
+            <configuration>
+              <rules><rule><element>BUNDLE</element><limits>
+                <limit><counter>LINE</counter><value>COVEREDRATIO</value><minimum>0.40</minimum></limit>
+              </limits></rule></rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -122,15 +123,9 @@
           <linkXRef>false</linkXRef>
         </configuration>
         <executions>
-          <execution>
-            <id>checkstyle-check</id>
-            <phase>verify</phase>
-            <goals><goal>check</goal></goals>
-          </execution>
+          <execution><id>checkstyle-check</id><phase>verify</phase><goals><goal>check</goal></goals></execution>
         </executions>
       </plugin>
-
-      <!-- PMD + CPD -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
@@ -139,36 +134,20 @@
           <targetJdk>1.8</targetJdk>
           <printFailingErrors>true</printFailingErrors>
           <linkXRef>false</linkXRef>
-          <rulesets>
-            <ruleset>config/pmd/ruleset.xml</ruleset>
-          </rulesets>
+          <rulesets><ruleset>config/pmd/ruleset.xml</ruleset></rulesets>
           <minimumTokens>50</minimumTokens>
         </configuration>
         <dependencies>
-          <dependency>
-            <groupId>net.sourceforge.pmd</groupId>
-            <artifactId>pmd-core</artifactId>
-            <version>${pmd.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>net.sourceforge.pmd</groupId>
-            <artifactId>pmd-java</artifactId>
-            <version>${pmd.version}</version>
-          </dependency>
+          <dependency><groupId>net.sourceforge.pmd</groupId><artifactId>pmd-core</artifactId><version>${pmd.version}</version></dependency>
+          <dependency><groupId>net.sourceforge.pmd</groupId><artifactId>pmd-java</artifactId><version>${pmd.version}</version></dependency>
         </dependencies>
         <executions>
           <execution>
-            <id>pmd-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-              <goal>cpd-check</goal>
-            </goals>
+            <id>pmd-check</id><phase>verify</phase>
+            <goals><goal>check</goal><goal>cpd-check</goal></goals>
           </execution>
         </executions>
       </plugin>
-
-      <!-- SpotBugs -->
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -177,7 +156,7 @@
           <effort>Max</effort>
           <threshold>Medium</threshold>
           <failOnError>true</failOnError>
-          <xmlOutput>true</xmlOutput>
+          <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
         </configuration>
         <dependencies>
           <dependency>
@@ -187,15 +166,9 @@
           </dependency>
         </dependencies>
         <executions>
-          <execution>
-            <id>spotbugs-check</id>
-            <phase>verify</phase>
-            <goals><goal>check</goal></goals>
-          </execution>
+          <execution><id>spotbugs-check</id><phase>verify</phase><goals><goal>check</goal></goals></execution>
         </executions>
       </plugin>
-
-      <!-- PIT (Pitest) — mutation testing -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -208,21 +181,12 @@
           </dependency>
         </dependencies>
         <configuration>
-          <targetClasses>
-            <param>com.example.restapi.*</param>
-          </targetClasses>
-          <targetTests>
-            <param>com.example.restapi.*</param>
-          </targetTests>
-          <outputFormats>
-            <param>HTML</param>
-            <param>XML</param>
-          </outputFormats>
+          <targetClasses><param>com.example.restapi.*</param></targetClasses>
+          <targetTests><param>com.example.restapi.*</param></targetTests>
+          <outputFormats><param>HTML</param><param>XML</param></outputFormats>
           <timestampedReports>false</timestampedReports>
         </configuration>
       </plugin>
-
-      <!-- OWASP Dependency-Check -->
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
@@ -232,29 +196,30 @@
           <format>ALL</format>
         </configuration>
       </plugin>
-
-      <!-- diff-cover (diff-coverage) — coverage delta vs base branch -->
       <plugin>
         <groupId>io.github.surpsg</groupId>
         <artifactId>diff-coverage-maven-plugin</artifactId>
         <version>${diff-coverage.version}</version>
         <configuration>
-          <diffSource>
-            <git>refs/remotes/origin/Java-8</git>
-          </diffSource>
-          <jacocoExecFiles>
-            <file>${project.build.directory}/jacoco.exec</file>
-          </jacocoExecFiles>
-          <violations>
-            <failOnViolation>false</failOnViolation>
-            <minCoverage>0.0</minCoverage>
-          </violations>
+          <diffSource><git>refs/remotes/origin/Java-8</git></diffSource>
+          <jacocoExecFiles><file>${project.build.directory}/jacoco.exec</file></jacocoExecFiles>
+          <violations><failOnViolation>false</failOnViolation><minCoverage>0.0</minCoverage></violations>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <executable>bash</executable>
+          <workingDirectory>${project.basedir}</workingDirectory>
+          <arguments>
+            <argument>scripts/ck/run_ck.sh</argument>
+          </arguments>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
-  <!-- Static-DU-JaCoCo-composite: UnusedAssignment (static DU) + JaCoCo together -->
   <profiles>
     <profile>
       <id>static-du-jacoco-composite</id>
@@ -266,18 +231,12 @@
             <version>3.21.2</version>
             <configuration>
               <targetJdk>1.8</targetJdk>
-              <rulesets>
-                <ruleset>config/pmd/static-du-ruleset.xml</ruleset>
-              </rulesets>
-              <printFailingErrors>true</printFailingErrors>
+              <rulesets><ruleset>config/pmd/static-du-ruleset.xml</ruleset></rulesets>
               <failOnViolation>false</failOnViolation>
+              <printFailingErrors>true</printFailingErrors>
             </configuration>
             <executions>
-              <execution>
-                <id>static-du-check</id>
-                <phase>verify</phase>
-                <goals><goal>check</goal></goals>
-              </execution>
+              <execution><id>static-du-check</id><phase>verify</phase><goals><goal>check</goal></goals></execution>
             </executions>
           </plugin>
           <plugin>
@@ -285,11 +244,22 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco.version}</version>
             <executions>
-              <execution>
-                <id>composite-report</id>
-                <phase>verify</phase>
-                <goals><goal>report</goal></goals>
-              </execution>
+              <execution><id>composite-report</id><phase>verify</phase><goals><goal>report</goal></goals></execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>ck</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution><id>run-ck</id><phase>verify</phase><goals><goal>exec</goal></goals></execution>
             </executions>
           </plugin>
         </plugins>

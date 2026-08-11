@@ -1,59 +1,76 @@
 package com.example.restapi.service;
 
-import com.example.restapi.model.Item;
+import com.example.restapi.dto.ItemRequest;
+import com.example.restapi.dto.StockAdjustRequest;
+import com.example.restapi.exception.BadRequestException;
+import com.example.restapi.exception.ConflictException;
+import com.example.restapi.exception.ResourceNotFoundException;
+import com.example.restapi.mapper.ItemMapper;
+import com.example.restapi.repository.InventoryRepository;
+import com.example.restapi.repository.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ItemServiceTest {
-
     private ItemService service;
 
     @BeforeEach
     void setUp() {
-        service = new ItemService();
+        service = new ItemService(new ItemRepository(), new InventoryRepository(), new ItemMapper());
+    }
+
+    private ItemRequest req(String name, String sku, double price, int stock) {
+        ItemRequest r = new ItemRequest();
+        r.setName(name);
+        r.setSku(sku);
+        r.setPrice(price);
+        r.setStock(stock);
+        return r;
     }
 
     @Test
-    void createAndFindById() {
-        Item created = service.create(new Item(null, "Book", 12.5));
-        Optional<Item> found = service.findById(created.getId());
-        assertTrue(found.isPresent());
-        assertEquals("Book", found.get().getName());
-        assertEquals(12.5, found.get().getPrice(), 0.0001);
+    void createAndFind() {
+        com.example.restapi.dto.ItemResponse created = service.create(req("Book", "BOOK-1", 12.5, 5));
+        assertNotNull(created.getId());
+        assertEquals("BOOK-1", created.getSku());
+        assertEquals("Book", service.findById(created.getId()).getName());
     }
 
     @Test
-    void updateExistingItem() {
-        Item created = service.create(new Item(null, "Pen", 2.0));
-        Optional<Item> updated = service.update(created.getId(), new Item(null, "Marker", 3.5));
-        assertTrue(updated.isPresent());
-        assertEquals("Marker", updated.get().getName());
-        assertEquals(3.5, updated.get().getPrice(), 0.0001);
+    void duplicateSkuThrows() {
+        service.create(req("A", "SKU-1", 1.0, 1));
+        assertThrows(ConflictException.class, () -> service.create(req("B", "sku-1", 2.0, 1)));
     }
 
     @Test
-    void updateMissingItemReturnsEmpty() {
-        Optional<Item> updated = service.update(99L, new Item(null, "X", 1.0));
-        assertFalse(updated.isPresent());
+    void adjustStock() {
+        com.example.restapi.dto.ItemResponse created = service.create(req("Pen", "PEN-1", 2.0, 10));
+        StockAdjustRequest adj = new StockAdjustRequest();
+        adj.setDelta(-3);
+        adj.setReason("sale");
+        assertEquals(7, service.adjustStock(created.getId(), adj).getStock());
     }
 
     @Test
-    void deleteExistingItem() {
-        Item created = service.create(new Item(null, "Bag", 5.0));
-        assertTrue(service.delete(created.getId()));
-        assertFalse(service.findById(created.getId()).isPresent());
+    void adjustStockNegativeThrows() {
+        com.example.restapi.dto.ItemResponse created = service.create(req("Pen", "PEN-2", 2.0, 1));
+        StockAdjustRequest adj = new StockAdjustRequest();
+        adj.setDelta(-5);
+        adj.setReason("bad");
+        assertThrows(BadRequestException.class, () -> service.adjustStock(created.getId(), adj));
     }
 
     @Test
-    void totalValueSumsPrices() {
-        service.create(new Item(null, "A", 10.0));
-        service.create(new Item(null, "B", 5.5));
-        assertEquals(15.5, service.totalValue(), 0.0001);
+    void missingItemThrows() {
+        assertThrows(ResourceNotFoundException.class, () -> service.findById(999L));
+    }
+
+    @Test
+    void inventoryValue() {
+        service.create(req("A", "A-1", 10.0, 2));
+        service.create(req("B", "B-1", 5.0, 3));
+        assertEquals(35.0, service.inventoryValue(), 0.0001);
     }
 }

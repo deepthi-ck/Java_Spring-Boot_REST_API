@@ -1,0 +1,4 @@
+logging:
+  level:
+    com.example.restapi: DEBUG
+    org.springframework.web: INFO

@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: java-spring-boot-rest-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  pricing:
+    tax-rate-percent: 8.0
+    default-discount-percent: 0.0
+  runtime:
+    java-version: 8
