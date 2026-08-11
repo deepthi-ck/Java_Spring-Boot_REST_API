@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: java-spring-boot-rest-api-dev
+
+app:
+  pricing:
+    tax-rate-percent: 0.0
+  security:
+    api-key: dev-key-java25
+  runtime:
+    feature:
+      payments: true

@@ -1,48 +1,63 @@
-# Java Spring Boot REST API — Java 25
+# Java Spring Boot REST API
 
-Single-module Spring Boot REST API (`java.version=25`, Spring Boot 3.5.5).
-Tools are wired into this project (Maven + `config/` + `scripts/`) — **not** separate tool folders.
+Spring Boot REST API application for **Java 25 only**.
 
-Tool versions follow [Golden_Repo_Lite Java-25](https://github.com/testable-platform/Golden_Repo_Lite/tree/java/Java-25)
-(JaCoCo 0.8.12, Checkstyle config aligned with Golden). Full required tool set is still integrated in `pom.xml`.
+Inspired by the layout conventions of [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
+(`.sdkmanrc`, `.editorconfig`, `config/`, `documentation/`, wrapper, CI) and the official
+[Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/) application shape —
+while remaining a single product REST API (not the Spring Boot framework monorepo).
 
-## Structure
+## Requirements
+
+- JDK **25** (see `.sdkmanrc`)
+- Maven Wrapper (`./mvnw` / `mvnw.cmd`) — no global Maven required
+
+## Project structure
 
 ```
-pom.xml
-config/checkstyle|pmd|spotbugs/
-scripts/
-docs/
-src/main/java/com/example/restapi/
-  analytics|audit|catalog|config|controller|dto|event|exception
-  mapper|model|notification|payment|policy|report|repository
-  runtime|security|service|support|util|validation|warehouse|web
-src/main/resources/ (+ i18n, static)
-src/test/java/...
+.
+├── .github/workflows/          CI (JDK 25)
+├── .mvn/wrapper/               Maven Wrapper
+├── .sdkmanrc                   Java 25 pin
+├── .editorconfig
+├── config/                     Checkstyle / PMD / SpotBugs (like Spring Boot config/)
+├── documentation/              Architecture, API, tools
+├── scripts/
+│   ├── ck/                     CK runner
+│   ├── git/                    Git churn metrics
+│   └── tools/                  Aggregate quality pipeline
+├── src/main/java/.../restapi/  Spring Boot application + REST layers
+├── src/main/resources/         application.yaml (+ profiles)
+├── src/test/java/              Tests
+├── mvnw / mvnw.cmd
+└── pom.xml                     Spring Boot 3.5 + quality plugins
 ```
 
-## APIs
-
-- `/api/items` `/api/products` `/api/categories` `/api/customers`
-- `/api/orders` `/api/shipments` `/api/payments` `/api/notifications`
-- `/api/warehouses` `/api/catalog/brands` `/api/audit` `/api/analytics`
-- `/api/policies` `/api/reports` `/api/events` `/api/runtime` `/api/stats/summary` `/api/health`
-
-## Tools (Java 25)
-
-| Tool | Command |
-|------|---------|
-| CK | `bash scripts/run_ck.sh` |
-| Checkstyle | `mvn checkstyle:check` |
-| PMD / CPD | `mvn pmd:check pmd:cpd-check` |
-| SpotBugs | `mvn spotbugs:check` |
-| JaCoCo | `mvn test jacoco:report` |
-| PIT | `mvn org.pitest:pitest-maven:mutationCoverage` |
-| OWASP-Dependency-Check | `mvn org.owasp:dependency-check-maven:check` |
-| diff-cover | `mvn diff-coverage:report` |
-| Git | `python scripts/git_churn.py` |
-| Static-DU-JaCoCo-composite | `mvn verify -Pstatic-du-jacoco-composite` |
+## Building from source
 
 ```bash
-mvn clean verify
+./mvnw clean test
+./mvnw spring-boot:run
 ```
+
+Windows:
+
+```bat
+mvnw.cmd clean test
+mvnw.cmd spring-boot:run
+```
+
+Health: `http://localhost:8080/api/health`
+
+## Quality tools (integrated)
+
+See `documentation/TOOLS.md`. All of: CK, CPD, Checkstyle, Git, JaCoCo,
+OWASP-Dependency-Check, PIT, PMD, SpotBugs, Static-DU-JaCoCo-composite, diff-cover.
+
+```bash
+bash scripts/tools/run_tools.sh
+```
+
+## License
+
+Apache License 2.0 — see `LICENSE.txt`.
