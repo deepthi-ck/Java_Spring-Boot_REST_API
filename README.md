@@ -4,9 +4,7 @@ Single-module Spring Boot REST API (`java.version=25`, Spring Boot 3.5.5).
 Tools are wired into this project (Maven + `config/` + `scripts/`) — **not** separate tool folders.
 
 Tool versions follow [Golden_Repo_Lite Java-25](https://github.com/testable-platform/Golden_Repo_Lite/tree/java/Java-25)
-where available (JaCoCo 0.8.12, Checkstyle). Remaining tools from the shared set are integrated the same way as other JDK branches.
-
-Golden Java-25 currently lists Checkstyle, JaCoCo, and ba-dua fixtures; this project still wires the full requested tool set into one REST API.
+(JaCoCo 0.8.12, Checkstyle config aligned with Golden). Full required tool set is still integrated in `pom.xml`.
 
 ## Structure
 
@@ -14,15 +12,21 @@ Golden Java-25 currently lists Checkstyle, JaCoCo, and ba-dua fixtures; this pro
 pom.xml
 config/checkstyle|pmd|spotbugs/
 scripts/
+docs/
 src/main/java/com/example/restapi/
-  controller|service|repository|model|dto|mapper|exception|config|util|event|security|validation|runtime
+  analytics|audit|catalog|config|controller|dto|event|exception
+  mapper|model|notification|payment|policy|report|repository
+  runtime|security|service|support|util|validation|warehouse|web
+src/main/resources/ (+ i18n, static)
 src/test/java/...
 ```
 
 ## APIs
 
 - `/api/items` `/api/products` `/api/categories` `/api/customers`
-- `/api/orders` `/api/shipments` `/api/stats/summary` `/api/events` `/api/health` `/api/runtime`
+- `/api/orders` `/api/shipments` `/api/payments` `/api/notifications`
+- `/api/warehouses` `/api/catalog/brands` `/api/audit` `/api/analytics`
+- `/api/policies` `/api/reports` `/api/events` `/api/runtime` `/api/stats/summary` `/api/health`
 
 ## Tools (Java 25)
 
