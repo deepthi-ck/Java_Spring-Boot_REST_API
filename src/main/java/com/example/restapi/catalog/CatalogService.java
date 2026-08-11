@@ -1,4 +1,4 @@
-﻿package com.example.restapi.catalog;
+package com.example.restapi.catalog;
 
 import org.springframework.stereotype.Service;
 

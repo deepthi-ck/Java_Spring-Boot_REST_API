@@ -1,4 +1,4 @@
-﻿# Architecture
+# Architecture
 
 Monolithic Spring Boot REST service for Scenario 1.
 Packages are split by domain (controller/service/model/repository + cross-cutting web/support/policy).

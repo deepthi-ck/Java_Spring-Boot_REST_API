@@ -1,4 +1,4 @@
-﻿package com.example.restapi.catalog;
+package com.example.restapi.catalog;
 
 import org.junit.jupiter.api.Test;
 

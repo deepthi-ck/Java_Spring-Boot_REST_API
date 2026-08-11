@@ -1,4 +1,4 @@
-﻿package com.example.restapi.catalog;
+package com.example.restapi.catalog;
 
 import java.util.Locale;
 import java.util.Objects;

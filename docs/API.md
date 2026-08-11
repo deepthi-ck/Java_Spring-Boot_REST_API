@@ -1,4 +1,4 @@
-﻿# API Overview (Java 25)
+# API Overview (Java 25)
 
 Core domains:
 - items, products, categories, customers, orders, shipments

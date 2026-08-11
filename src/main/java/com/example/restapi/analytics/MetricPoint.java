@@ -1,4 +1,4 @@
-﻿package com.example.restapi.analytics;
+package com.example.restapi.analytics;
 
 import java.time.Instant;
 import java.util.Objects;

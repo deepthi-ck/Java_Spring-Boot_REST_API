@@ -1,4 +1,4 @@
-﻿package com.example.restapi.policy;
+package com.example.restapi.policy;
 
 import org.springframework.stereotype.Component;
 

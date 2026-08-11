@@ -1,4 +1,4 @@
-﻿package com.example.restapi.warehouse;
+package com.example.restapi.warehouse;
 
 import java.util.Objects;
 import java.util.UUID;

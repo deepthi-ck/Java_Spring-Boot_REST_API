@@ -1,4 +1,4 @@
-﻿package com.example.restapi.payment;
+package com.example.restapi.payment;
 
 import java.util.EnumSet;
 import java.util.Locale;

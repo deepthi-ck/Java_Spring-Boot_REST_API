@@ -1,4 +1,4 @@
-﻿package com.example.restapi.notification;
+package com.example.restapi.notification;
 
 import java.time.Instant;
 import java.util.Objects;

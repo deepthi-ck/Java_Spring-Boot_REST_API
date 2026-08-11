@@ -1,4 +1,4 @@
-﻿package com.example.restapi.report;
+package com.example.restapi.report;
 
 import org.springframework.stereotype.Component;
 

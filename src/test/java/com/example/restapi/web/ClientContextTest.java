@@ -1,4 +1,4 @@
-﻿package com.example.restapi.web;
+package com.example.restapi.web;
 
 import org.junit.jupiter.api.Test;
 

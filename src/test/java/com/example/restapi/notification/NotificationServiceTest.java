@@ -1,4 +1,4 @@
-﻿package com.example.restapi.notification;
+package com.example.restapi.notification;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-﻿package com.example.restapi.analytics;
+package com.example.restapi.analytics;
 
 import org.springframework.stereotype.Service;
 

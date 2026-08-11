@@ -1,4 +1,4 @@
-﻿package com.example.restapi.payment;
+package com.example.restapi.payment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

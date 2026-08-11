@@ -1,4 +1,4 @@
-﻿package com.example.restapi.controller;
+package com.example.restapi.controller;
 
 import com.example.restapi.payment.Payment;
 import com.example.restapi.payment.PaymentMethod;

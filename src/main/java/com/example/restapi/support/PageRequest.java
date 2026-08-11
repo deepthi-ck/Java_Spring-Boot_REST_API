@@ -1,4 +1,4 @@
-﻿package com.example.restapi.support;
+package com.example.restapi.support;
 
 public final class PageRequest {
     private final int page;

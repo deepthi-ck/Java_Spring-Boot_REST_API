@@ -1,4 +1,4 @@
-﻿package com.example.restapi.web;
+package com.example.restapi.web;
 
 import java.util.Locale;
 import java.util.Objects;
