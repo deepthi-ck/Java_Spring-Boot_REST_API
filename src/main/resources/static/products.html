@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products | Catalog Operations Console</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">Catalog Operations<span>Spring Boot REST console</span></div>
+      <nav class="nav">
+        <a href="/index.html">Dashboard</a>
+        <a href="/products.html">Products</a>
+        <a href="/customers.html">Customers</a>
+        <a href="/categories.html">Categories</a>
+        <a href="/items.html">Inventory</a>
+        <a href="/orders.html">Orders</a>
+        <a href="/stats.html">Stats &amp; Health</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1>Products</h1>
+          <p class="subtitle">Production-style operations UI powered by built-in Spring Boot static resources and REST APIs.</p>
+        </div>
+        <div class="badge" id="runtime-badge">Checking service…</div>
+      </div>
+      <div id="flash" class="flash" role="status"></div>
+      <div class="grid" style="grid-template-columns: 1.1fr 1fr; gap: 16px;">
+        <section class="card">
+          <h2>Product catalog</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Title</th><th>Description</th><th>Unit price</th><th>Status</th></tr></thead>
+              <tbody id="products-body"><tr><td colspan="5" class="empty">Loading products…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Create product</h2>
+          <form id="product-form" class="panel">
+            <label>Product title
+              <input id="product-title" name="title" required maxlength="120" placeholder="Wireless noise-cancelling headphones">
+            </label>
+            <label>Description
+              <textarea id="product-description" name="description" rows="3" placeholder="Over-ear Bluetooth headset with 30-hour battery life"></textarea>
+            </label>
+            <div class="row">
+              <label>Unit price (USD)
+                <input id="product-price" name="unitPrice" type="number" min="0.01" step="0.01" required placeholder="149.99">
+              </label>
+              <label style="align-content:end">
+                <span><input id="product-active" type="checkbox" checked> Active in catalog</span>
+              </label>
+            </div>
+            <div class="actions"><button type="submit">Save product</button></div>
+          </form>
+        </section>
+      </div>
+      <p class="footer-note">Navigate using the left menu. All pages call the same in-process REST API.</p>
+    </main>
+  </div>
+  <script src="/js/app.js"></script>
+</body>
+</html>

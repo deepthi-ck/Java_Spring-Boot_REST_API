@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stats & Health | Catalog Operations Console</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">Catalog Operations<span>Spring Boot REST console</span></div>
+      <nav class="nav">
+        <a href="/index.html">Dashboard</a>
+        <a href="/products.html">Products</a>
+        <a href="/customers.html">Customers</a>
+        <a href="/categories.html">Categories</a>
+        <a href="/items.html">Inventory</a>
+        <a href="/orders.html">Orders</a>
+        <a href="/stats.html">Stats &amp; Health</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1>Stats & Health</h1>
+          <p class="subtitle">Production-style operations UI powered by built-in Spring Boot static resources and REST APIs.</p>
+        </div>
+        <div class="badge" id="runtime-badge">Checking service…</div>
+      </div>
+      <div id="flash" class="flash" role="status"></div>
+      <div id="stats-detail"><div class="empty">Loading statistics…</div></div>
+      <p class="footer-note">Navigate using the left menu. All pages call the same in-process REST API.</p>
+    </main>
+  </div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
