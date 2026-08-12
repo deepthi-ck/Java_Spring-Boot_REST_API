@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory Items | Catalog Operations Console</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">Catalog Operations<span>Spring Boot REST console</span></div>
+      <nav class="nav">
+        <a href="/index.html">Dashboard</a>
+        <a href="/products.html">Products</a>
+        <a href="/customers.html">Customers</a>
+        <a href="/categories.html">Categories</a>
+        <a href="/items.html">Inventory</a>
+        <a href="/orders.html">Orders</a>
+        <a href="/stats.html">Stats &amp; Health</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1>Inventory Items</h1>
+          <p class="subtitle">Production-style operations UI powered by built-in Spring Boot static resources and REST APIs.</p>
+        </div>
+        <div class="badge" id="runtime-badge">Checking service…</div>
+      </div>
+      <div id="flash" class="flash" role="status"></div>
+      <div class="grid" style="grid-template-columns: 1.1fr 1fr; gap: 16px;">
+        <section class="card">
+          <h2>Inventory</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>SKU</th><th>Price</th><th>Stock</th></tr></thead>
+              <tbody id="items-body"><tr><td colspan="5" class="empty">Loading inventory…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Create inventory item</h2>
+          <form id="item-form" class="panel">
+            <label>Item name
+              <input id="item-name" required placeholder="USB-C docking station">
+            </label>
+            <label>SKU
+              <input id="item-sku" required placeholder="DOCK-USB-C-01">
+            </label>
+            <div class="row">
+              <label>Price (USD)
+                <input id="item-price" type="number" min="0.01" step="0.01" required placeholder="89.50">
+              </label>
+              <label>Stock quantity
+                <input id="item-stock" type="number" min="0" step="1" required placeholder="25">
+              </label>
+            </div>
+            <label>Category ID (optional)
+              <input id="item-category" type="number" min="1" step="1" placeholder="Enter existing category ID, e.g. 1">
+            </label>
+            <div class="actions"><button type="submit">Save item</button></div>
+          </form>
+        </section>
+      </div>
+      <p class="footer-note">Navigate using the left menu. All pages call the same in-process REST API.</p>
+    </main>
+  </div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
