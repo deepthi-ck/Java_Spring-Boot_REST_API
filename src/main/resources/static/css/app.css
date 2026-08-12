@@ -1,0 +1,101 @@
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #1a2332;
+  --muted: #5b6b7c;
+  --line: #d8dee6;
+  --brand: #0b5fff;
+  --brand-ink: #ffffff;
+  --ok: #0f7b4c;
+  --warn: #9a6700;
+  --danger: #b42318;
+  --shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+  --radius: 12px;
+  --nav: #0f172a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, #eef3f8 0%, var(--bg) 220px);
+  min-height: 100vh;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar {
+  background: var(--nav);
+  color: #e8eef7;
+  padding: 24px 18px;
+  position: sticky; top: 0; height: 100vh;
+}
+.brand { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 6px; }
+.brand span { display: block; font-size: 0.78rem; font-weight: 400; color: #9db0c7; margin-top: 4px; }
+.nav { display: flex; flex-direction: column; gap: 6px; margin-top: 28px; }
+.nav a {
+  color: #d7e2f0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.nav a:hover, .nav a.active { background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; }
+.content { padding: 28px 32px 48px; }
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 22px; gap: 16px; flex-wrap: wrap;
+}
+h1 { margin: 0; font-size: 1.6rem; }
+.subtitle { color: var(--muted); margin: 6px 0 0; }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #e8f0ff; color: #0b3ea8;
+  border: 1px solid #c9dbff; border-radius: 999px;
+  padding: 6px 12px; font-size: 0.82rem;
+}
+.grid { display: grid; gap: 16px; }
+.grid.stats { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 20px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px;
+}
+.card h2, .card h3 { margin: 0 0 12px; font-size: 1.05rem; }
+.stat-label { color: var(--muted); font-size: 0.85rem; }
+.stat-value { font-size: 1.55rem; font-weight: 700; margin-top: 8px; }
+.table-wrap { overflow: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; background: #f8fafc; }
+form.panel { display: grid; gap: 12px; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+label { display: grid; gap: 6px; font-size: 0.86rem; color: var(--muted); }
+input, select, textarea {
+  width: 100%; border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; font: inherit; color: var(--ink); background: #fff;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid rgba(11,95,255,0.25); border-color: var(--brand);
+}
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+button, .btn {
+  border: none; border-radius: 8px; padding: 10px 14px; font: inherit;
+  cursor: pointer; background: var(--brand); color: var(--brand-ink);
+}
+button.secondary, .btn.secondary { background: #e9eef5; color: var(--ink); }
+button.danger { background: var(--danger); color: #fff; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+.flash {
+  display: none; margin: 0 0 16px; padding: 12px 14px; border-radius: 8px;
+  border: 1px solid transparent;
+}
+.flash.show { display: block; }
+.flash.ok { background: #e9f8f0; border-color: #b7ebcf; color: var(--ok); }
+.flash.err { background: #fef3f2; border-color: #fecdca; color: var(--danger); }
+.empty { color: var(--muted); padding: 18px 4px; }
+.footer-note { margin-top: 18px; color: var(--muted); font-size: 0.84rem; }
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { position: relative; height: auto; }
+  .nav { flex-direction: row; flex-wrap: wrap; }
+}
