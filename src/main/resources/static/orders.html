@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard | Catalog Operations Console</title>
+  <title>Orders | Catalog Operations Console</title>
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
@@ -23,21 +23,37 @@
     <main class="content">
       <div class="topbar">
         <div>
-          <h1>Dashboard</h1>
+          <h1>Orders</h1>
           <p class="subtitle">Production-style operations UI powered by built-in Spring Boot static resources and REST APIs.</p>
         </div>
         <div class="badge" id="runtime-badge">Checking service…</div>
       </div>
       <div id="flash" class="flash" role="status"></div>
-      <div id="dashboard-stats" class="grid stats"></div>
-      <div class="card">
-        <h2>Quick navigation</h2>
-        <div class="actions">
-          <a class="btn" href="/products.html">Manage products</a>
-          <a class="btn secondary" href="/customers.html">Register customers</a>
-          <a class="btn secondary" href="/orders.html">Place orders</a>
-          <a class="btn secondary" href="/stats.html">View health</a>
-        </div>
+      <div class="grid" style="grid-template-columns: 1.1fr 1fr; gap: 16px;">
+        <section class="card">
+          <h2>Order list</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Customer ID</th><th>Status</th><th>Lines</th><th>Total</th></tr></thead>
+              <tbody id="orders-body"><tr><td colspan="5" class="empty">Loading orders…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Place order</h2>
+          <form id="order-form" class="panel">
+            <label>Customer ID
+              <input id="order-customer" type="number" min="1" required placeholder="Enter customer ID, e.g. 1">
+            </label>
+            <label>Item ID
+              <input id="order-item" type="number" min="1" required placeholder="Enter inventory item ID, e.g. 1">
+            </label>
+            <label>Quantity
+              <input id="order-qty" type="number" min="1" step="1" required placeholder="2">
+            </label>
+            <div class="actions"><button type="submit">Submit order</button></div>
+          </form>
+        </section>
       </div>
       <p class="footer-note">Navigate using the left menu. All pages call the same in-process REST API.</p>
     </main>

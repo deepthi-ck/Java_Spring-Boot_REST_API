@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard | Catalog Operations Console</title>
+  <title>Categories | Catalog Operations Console</title>
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
@@ -23,21 +23,34 @@
     <main class="content">
       <div class="topbar">
         <div>
-          <h1>Dashboard</h1>
+          <h1>Categories</h1>
           <p class="subtitle">Production-style operations UI powered by built-in Spring Boot static resources and REST APIs.</p>
         </div>
         <div class="badge" id="runtime-badge">Checking service…</div>
       </div>
       <div id="flash" class="flash" role="status"></div>
-      <div id="dashboard-stats" class="grid stats"></div>
-      <div class="card">
-        <h2>Quick navigation</h2>
-        <div class="actions">
-          <a class="btn" href="/products.html">Manage products</a>
-          <a class="btn secondary" href="/customers.html">Register customers</a>
-          <a class="btn secondary" href="/orders.html">Place orders</a>
-          <a class="btn secondary" href="/stats.html">View health</a>
-        </div>
+      <div class="grid" style="grid-template-columns: 1.1fr 1fr; gap: 16px;">
+        <section class="card">
+          <h2>Category list</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Code</th></tr></thead>
+              <tbody id="categories-body"><tr><td colspan="3" class="empty">Loading categories…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Create category</h2>
+          <form id="category-form" class="panel">
+            <label>Category name
+              <input id="category-name" required placeholder="Consumer Electronics">
+            </label>
+            <label>Category code
+              <input id="category-code" required maxlength="32" placeholder="ELEC">
+            </label>
+            <div class="actions"><button type="submit">Save category</button></div>
+          </form>
+        </section>
       </div>
       <p class="footer-note">Navigate using the left menu. All pages call the same in-process REST API.</p>
     </main>
